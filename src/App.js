@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
-import './App.css';
-import GenerateNumbers from './components/GenerateNumbers';
-import CheckNumber from './components/CheckNumber';
+import React, { useState, useRef } from "react";
+import "./App.css";
+import GenerateNumbers from "./components/GenerateNumbers";
+import CheckNumber from "./components/CheckNumber";
 
 function App() {
     const [numbers, setNumbers] = useState({
-        firstPrize: '',
-        secondPrize1: '',
-        secondPrize2: '',
-        secondPrize3: '',
-        twoDigit: '',
-        closePrize: '',
-        closePrize2: ''
+        firstPrize: "",
+        secondPrize1: "",
+        secondPrize2: "",
+        secondPrize3: "",
+        twoDigit: "",
+        closePrize: "",
+        closePrize2: "",
     });
+
+    const checkNumberRef = useRef();
 
     const handleNumbersUpdate = (newNumbers) => {
         setNumbers(newNumbers);
+        if (checkNumberRef.current) {
+            checkNumberRef.current.resetState();
+        }
     };
 
     return (
@@ -25,7 +30,7 @@ function App() {
             </header>
             <div className="container-solid">
                 <GenerateNumbers onNumbersUpdate={handleNumbersUpdate} />
-                <CheckNumber numbers={numbers} />
+                <CheckNumber ref={checkNumberRef} numbers={numbers} />
             </div>
         </div>
     );
